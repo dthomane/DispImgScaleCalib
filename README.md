@@ -1,4 +1,4 @@
-# Official implementation of "Metric Scaling and Extrinsic Calibration of Monocular Neural Network-Derived 3D Point Clouds in Railway Applications"
+# Metric Scaling and Extrinsic Calibration of Monocular Neural Network-Derived 3D Point Clouds in Railway Applications
 The repository contains the official implementation of our [publication](https://www.mdpi.com/2076-3417/15/10/5361)
 
 ![Teaser image of example results](/teaser/teaserimg.png)
