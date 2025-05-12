@@ -70,3 +70,6 @@ class CalibConstants:
         self.f = 7267.95450880415
         self.cx = 2056.049238502414
         self.cy = 1232.862908875167
+
+        self.width = 4112
+        self.height = 2504

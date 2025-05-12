@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pylab as plt
-from sklearn.cluster import DBSCAN
+#from sklearn.cluster import DBSCAN
 from scipy import stats as st
 from scipy.optimize import least_squares as ls
 
-import timeit
+#import timeit
 
 ## Function compute initial Rotation and Translation
 ## Parameter: pnts: np.array with points on the rails
@@ -107,6 +107,8 @@ def optimize2D(pnts_2d, optimizer = "BF", min_angle = -np.pi/5, max_angle = np.p
     return opt_angle
     
 
+from dbscan1d.core import DBSCAN1D
+
 def correctCalibration(pnts, T, R, plot = True, optimizer = "BF", eps = 0.01, min_samples=500):
     #plot = True
     ex = R[0]
@@ -138,7 +140,8 @@ def correctCalibration(pnts, T, R, plot = True, optimizer = "BF", eps = 0.01, mi
 
         ax[0,0].plot(pnts_2d[:,0], pnts_2d[:,1], 'bo')
         ax[0,0].plot(los_2d[:,0], los_2d[:,1], 'r-')
-        
+    
+
     # Optimize the Angle and correct Normal Vectors
     opt_angle = optimize2D(pnts_2d, optimizer)
    
@@ -158,9 +161,12 @@ def correctCalibration(pnts, T, R, plot = True, optimizer = "BF", eps = 0.01, mi
         ax[0,1].plot(pnts_2d[:,0], pnts_2d[:,1], 'bo')
         ax[0,1].plot(los_2d[:,0], los_2d[:,1], 'r-')
 
-    # Find Rail Clusters and centers
-    db = DBSCAN(eps=eps, min_samples=min_samples).fit(pnts_2d[:,1].reshape(-1, 1))
-    labels = db.labels_
+
+    min_samples = np.clip(int(0.1 * len(pnts_2d[:,1])), a_min=100, a_max=500)
+    eps = np.clip(0.1 * (np.max(pnts_2d[:,1]) - np.min(pnts_2d[:,1])), a_min=0.01, a_max=0.5)
+    
+    dbs = DBSCAN1D(eps=eps, min_samples=min_samples)
+    labels = dbs.fit_predict(pnts_2d[:,1])
 
     n_cluster = len(set(labels)) - (1 if -1 in labels else 0)
     distributions = np.empty((n_cluster, 2))
@@ -216,9 +222,12 @@ def correctCalibration(pnts, T, R, plot = True, optimizer = "BF", eps = 0.01, mi
         ax[1,1].plot(pnts_r[:,0], pnts_r[:,1], 'ro')
         ax[1,1].plot(pnts_n[:,0], pnts_n[:,1], 'bo')
 
-    print(f'Found Scale: {scale}')
-
     if plot:
         plt.savefig("plot_2D.png")
+
+    # Cam 2 World + Shift below camera: Easier after inverse transform
+    R = np.linalg.inv(np.array(R).T)
+    T = -1.0*R.dot(T)
+    T[0] = 0.0
 
     return scale, T, np.array([ex, ey, ez])
