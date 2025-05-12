@@ -1,0 +1,2 @@
+
+LBL_RAIL_RAISED = 17
