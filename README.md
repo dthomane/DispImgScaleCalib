@@ -12,6 +12,7 @@ We recommend using a virtual environment such as conda for managing dependencies
 - opencv
 - open3d
 - DBSCANN1d (https://pypi.org/project/dbscan1d/)
+
 You can create a minimal conda environment for testing with preprocessed data using the provided environment.yml file.
 
 ## Quick Start (with Preprocessed Data)
