@@ -22,7 +22,7 @@ python example.py
 (Without arguments preprocessed depth and segmentation is used)
 
 ## Using OSDaR23 Dataset
-We have prepared calibration and evaluation scripts for the OSDaR23 Dataset. You can download the preprocessed depth and segmentation data from here (link follows soon). Please download the original scenes from the official dataset page [here](https://data.fid-move.de/dataset/osdar23)
+We have prepared calibration and evaluation scripts for the OSDaR23 Dataset. You can download the preprocessed depth and segmentation data from [here](https://tubcloud.tu-berlin.de/s/A7XGaEspa6GxpzJ). Please download the original scenes from the official dataset page [here](https://data.fid-move.de/dataset/osdar23)
 
 If you have downloaded the preprocessed data, please organize it using the following folder structure:
 ```
