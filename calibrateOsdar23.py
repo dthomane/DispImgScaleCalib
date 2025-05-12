@@ -3,8 +3,10 @@ import os
 
 from utils.osdar23 import calib_scenes
 from calibration.osdar23 import calibrateOsdar23Scene
+from calibration.data import CalibConstants
 
 from depthmodels.createmodel import create_model
+
 
 if __name__ == '__main__':
     
@@ -54,6 +56,14 @@ if __name__ == '__main__':
         help='This is a sparsify factor for uniformely exclude points before calibrating. This speed up the calibration but may lead to poorer results'
     )
 
+    parser.add_argument(
+        '--optimizer', 
+        type=str, 
+        default='BF', 
+        help='Method for Angle optimization BF: Brute Force, or LM: Levenberg Marquardt', 
+        choices=['BF', 'LM']
+    )
+
     args = parser.parse_args()
 
     if args.depthmodel is not None:
@@ -77,10 +87,33 @@ if __name__ == '__main__':
     
     for scene in calib_scenes:
 
+        if args.depthmodel is None:
+            depthmodeName = 'Unidepth'
+        else:
+            depthmodeName = args.depthmodel
+
+        if args.segmentation == 'preprocessed':
+            segmodelName = 'internimage'
+        else:
+            segmodelName = args.segmentation
+        
+        
+        resultfolder = os.path.join(args.dataset, 'calib_results', depthmodeName, scene, segmodelName, args.optimizer)
+        if not os.path.exists(resultfolder):
+            print(f'Creating Folder for calib results: {resultfolder}')
+            os.makedirs(resultfolder)
+
+        calibConst = CalibConstants()
+        calibConst.max_dist = 20
+        calibConst.min_disp = 15
+
         calibrateOsdar23Scene(
             args.dataset,
             scene,
+            resultfolder,
+            calib_const=calibConst,
             depthmodel=depthmodel,
             segmodel=segmodel,
-            sparsify=args.sparsify
+            sparsify=args.sparsify,
+            optimizer=args.optimizer
         )
