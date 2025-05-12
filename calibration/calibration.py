@@ -161,9 +161,9 @@ def correctCalibration(pnts, T, R, plot = True, optimizer = "BF", eps = 0.01, mi
         ax[0,1].plot(pnts_2d[:,0], pnts_2d[:,1], 'bo')
         ax[0,1].plot(los_2d[:,0], los_2d[:,1], 'r-')
 
-
-    min_samples = np.clip(int(0.1 * len(pnts_2d[:,1])), a_min=100, a_max=500)
-    eps = np.clip(0.1 * (np.max(pnts_2d[:,1]) - np.min(pnts_2d[:,1])), a_min=0.01, a_max=0.5)
+    ## Most of the time default params are way faster and ok...
+    #min_samples = np.clip(int(0.1 * len(pnts_2d[:,1])), a_min=100, a_max=500)
+    #eps = np.clip(0.1 * (np.max(pnts_2d[:,1]) - np.min(pnts_2d[:,1])), a_min=0.01, a_max=0.5)
     
     dbs = DBSCAN1D(eps=eps, min_samples=min_samples)
     labels = dbs.fit_predict(pnts_2d[:,1])

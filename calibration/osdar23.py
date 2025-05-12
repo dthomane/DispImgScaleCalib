@@ -11,21 +11,14 @@ from calibration.calibration import initCalibration, correctCalibration
 from segmodels.osdar23gt import osdar23gt
 
 
-def calibrateOsdar23Scene(root, scene, calib_const = CalibConstants(), depthmodel=None, segmodel=None, optimizer='BF', sparsify=0.0):
-
-    resultfolder = os.path.join(root, 'calib_results', 'UniDepth', scene, 'internimage', optimizer)
-    
-    if not os.path.exists(resultfolder):
-        print(f'Creating Folder for calib results: {resultfolder}')
-        os.makedirs(resultfolder)
-
+def calibrateOsdar23Scene(root, scene, resultfolder, calib_const = CalibConstants(), depthmodel=None, segmodel=None, optimizer='BF', sparsify=0.0):
 
     imgfolder = os.path.join(root, 'dataset', scene, 'rgb_highres_center')
     imgfiles = sorted(os.listdir(imgfolder))
 
 
     for imgfile in imgfiles:
-        imgname = imgfile.split('.')[0]
+        imgname = os.path.splitext(imgfile)[0]
 
         if depthmodel is not None or segmodel is not None:
             imgfile = os.path.join(imgfolder, imgfile)
@@ -42,7 +35,7 @@ def calibrateOsdar23Scene(root, scene, calib_const = CalibConstants(), depthmode
         
         if segmodel is None:
             ## Load segmentation
-            segfile = os.path.join(root, 'preprocessed', 'internimage', f'{imgname}.png')
+            segfile = os.path.join(root, 'preprocessed', 'internimage', scene, f'{imgname}.png')
             segimg = cv2.imread(segfile, cv2.IMREAD_UNCHANGED)
             segimg = cv2.resize(segimg, (4112, 2504), interpolation = cv2.INTER_LINEAR)
             
@@ -53,14 +46,13 @@ def calibrateOsdar23Scene(root, scene, calib_const = CalibConstants(), depthmode
             segimg = segmodel.predict(origimg)
 
 
+        to3D = to3D_depth(calib_const)
 
         found_result = False
         cur_accuracy_thresh = calib_const.accuracy_thresh
         to3D.resetThrehold()
         
         while not found_result:
-
-            to3D = to3D_depth(calib_const)
 
             ## in Railsem19, rails are class rail-raised (17)
             seg_msk = segimg == LBL_RAIL_RAISED
@@ -96,7 +88,7 @@ def calibrateOsdar23Scene(root, scene, calib_const = CalibConstants(), depthmode
             
         if found_result:
             # Save calibration
-            resultfile = os.path.join(resultfolder, os.path.splitext(depthfile)[0] + ".json")
+            resultfile = os.path.join(resultfolder, f'{imgname}.json')
 
             calibdata = CalibParams()
             calibdata.T = T.tolist()
