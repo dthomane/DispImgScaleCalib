@@ -16,7 +16,7 @@ We recommend using a virtual environment such as conda for managing dependencies
 You can create a minimal conda environment for testing with preprocessed data using the provided environment.yml file.
 
 ## Quick Start (with Preprocessed Data)
-You can run our minimal example download by typing (preprocessed files are included in example folder)
+You can run our minimal example by typing (preprocessed files are included in example folder)
 ```
 python example.py
 ```
