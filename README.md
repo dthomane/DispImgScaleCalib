@@ -57,8 +57,11 @@ rootfolder
 and provide the path to rootfolder:
 ```
 python calibrateOsdar23.py path/to/rootfolder
+python evaluateOsdar23.py path/to/rootfolder
 ```
 (Without arguments preprocessed depth and segmentation is used)
+Calibration creates a folder calib_results in rootfolder including JSON-files with calibration info. Evaluation create a folder calib_results in rootfolder with CSV-files containing evaluation results
+
 
 ## Using Depth Models Directly
 If you prefer to use a depth model directly (instead of preprocessed data), make sure your environment is properly configured. You will need to provide the path to the repository of the depth model you wish to use.
