@@ -22,7 +22,20 @@ python example.py
 (Without arguments preprocessed depth and segmentation is used)
 
 ## Using OSDaR23 Dataset
-We have prepared calibration and evaluation scripts for the OSDaR23 Dataset. You can download the preprocessed depth and segmentation data from [here](https://tubcloud.tu-berlin.de/s/A7XGaEspa6GxpzJ). Please download the original scenes from the official dataset page [here](https://data.fid-move.de/dataset/osdar23)
+We have prepared calibration and evaluation scripts for the OSDaR23 Dataset. 
+
+You can download the preprocessed depth and segmentation data from [here](https://tubcloud.tu-berlin.de/s/A7XGaEspa6GxpzJ)
+
+Please download the original scenes from the official dataset page [here](https://data.fid-move.de/dataset/osdar23)
+
+> [!IMPORTANT]
+> Since the preprocessed data is derived from the OSDaR23 Dataset, it is published under the same license: [Creative Commons Attribution-ShareAlike 3.0 Germany](https://creativecommons.org/licenses/by-sa/3.0/deed.de)
+> 
+> Many thanks to:
+> 
+> <em>Roman Tilly , Philipp Neumaier , Karsten Schwalbe , Pavel Klasek , Rustam Tagiew , Patrick Denzler , Tobias Klockau , Martin Boekhoff , Martin Köppel , (2023). Open Sensor Data for Rail 2023 [Data set]. TIB. https://doi.org/10.57806/9mv146r0</em>
+
+
 
 If you have downloaded the preprocessed data, please organize it using the following folder structure:
 ```
