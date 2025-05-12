@@ -82,7 +82,7 @@ def run(depthmodel=None, segmodel=None, sparsify = 0.0):
     lid_pnts = np.array(pcd.points)
 
     vsbl_lidar_pnts = visibleLidarPoints(lid_pnts, calib_const, gt_extr.R, gt_extr.T, gt_extr.R0)
-    vsbl_lidar_pnts = gt_extr.R.dot(gt_extr.R0.dot(vsbl_lidar_pnts.T)).T + T
+    vsbl_lidar_pnts = gt_extr.R.dot(gt_extr.R0.dot(vsbl_lidar_pnts.T)).T + gt_extr.T
 
 
     ## Reproject raw unscaled
@@ -92,7 +92,7 @@ def run(depthmodel=None, segmodel=None, sparsify = 0.0):
     mask_map = depths < calib_const.max_dist
 
     img_pnts_raw = image_raw_3D[mask_map]
-    img_pnts_raw = gt_extr.R.dot(gt_extr.R0.dot(img_pnts_raw.T)).T + T
+    img_pnts_raw = gt_extr.R.dot(gt_extr.R0.dot(img_pnts_raw.T)).T + gt_extr.T
     
     raw_lid_m, _, raw_img_m, _ = chamferDist(vsbl_lidar_pnts, img_pnts_raw)
     cd_raw = 0.5*(raw_lid_m + raw_img_m)
@@ -105,7 +105,7 @@ def run(depthmodel=None, segmodel=None, sparsify = 0.0):
     mask_map = depths < calib_const.max_dist
 
     img_pnts = image_3D[mask_map]
-    img_pnts = gt_extr.R.dot(gt_extr.R0.dot(img_pnts.T)).T + T
+    img_pnts = gt_extr.R.dot(gt_extr.R0.dot(img_pnts.T)).T + gt_extr.T
 
     lid_m, _, img_m, _ = chamferDist(vsbl_lidar_pnts, img_pnts)
     cd = 0.5*(lid_m + img_m)
