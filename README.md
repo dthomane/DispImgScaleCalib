@@ -96,7 +96,7 @@ Since the functionality is highly dependent on the specific model and your envir
 
 To use a depth model:
 
-1. Download our pretrained weights here (Link follows soon)
+1. Download our pretrained weights [here](https://depositonce.tu-berlin.de/handle/11303/24963)
 2. Provide the path to these weights.
 
 ```
