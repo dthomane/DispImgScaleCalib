@@ -25,7 +25,7 @@ python example.py
 ## Using OSDaR23 Dataset
 We have prepared calibration and evaluation scripts for the OSDaR23 Dataset. 
 
-You can download the preprocessed depth and segmentation data from [here](https://tubcloud.tu-berlin.de/s/A7XGaEspa6GxpzJ)
+You can download the preprocessed depth and segmentation data from [here](https://doi.org/10.14279/depositonce-23834)
 
 Please download the original scenes from the official dataset page [here](https://data.fid-move.de/dataset/osdar23)
 
@@ -96,7 +96,7 @@ Since the functionality is highly dependent on the specific model and your envir
 
 To use a depth model:
 
-1. Download our pretrained weights [here](https://depositonce.tu-berlin.de/handle/11303/24963)
+1. Download our pretrained weights [here](https://doi.org/10.14279/depositonce-23779)
 2. Provide the path to these weights.
 
 ```
